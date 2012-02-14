@@ -21,6 +21,7 @@ The UI is intentionally plain to keep the focus on the architecture of the appli
 	mysql jooz -uroot < jooz.sql
 
 3. If your database uses credentials other than root, then you can modify the function getConnection() in api/index.php
+
 ## Services: ##
 
 The application is available with a PHPservices:
@@ -28,7 +29,9 @@ The application is available with a PHPservices:
 - The PHP services are available in the api directory of this repository. The RESTful services are implemented in PHP using the [Slim framework](http://www.slimframework.com/) (also included in the api directory).
 
 ## Issues Faced: ##
+
 I faced the following issues on Fedora:
+
  - No data was being populated even though the database had data. For this, Apache has to be configured to AllowOverride FileInfo for the api directories, as this is necessary for .htaccess files to be processed which Slim.php depends on.
  - Also need to have php-mysql package for connection to database
 
