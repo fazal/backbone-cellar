@@ -1,12 +1,12 @@
 // Models
-window.Wine = Backbone.Model.extend();
+window.Juice = Backbone.Model.extend();
 
-window.WineCollection = Backbone.Collection.extend({
-    model:Wine,
-    url:"../api/wines"
+window.JuiceCollection = Backbone.Collection.extend({
+    model:Juice,
+    url:"../api/juices"
 });
 
-window.WineListView = Backbone.View.extend({
+window.JuiceListView = Backbone.View.extend({
 
     tagName:'ul',
 
@@ -15,8 +15,8 @@ window.WineListView = Backbone.View.extend({
     },
 
     render:function (eventName) {
-        _.each(this.model.models, function (wine) {
-            $(this.el).append(new WineListItemView({model:wine}).render().el);
+        _.each(this.model.models, function (juice) {
+            $(this.el).append(new JuiceListItemView({model:juice}).render().el);
         }, this);
         return this;
     }
@@ -25,11 +25,11 @@ window.WineListView = Backbone.View.extend({
 
 
 // Views
-window.WineListItemView = Backbone.View.extend({
+window.JuiceListItemView = Backbone.View.extend({
 
     tagName:"li",
 
-    template:_.template($('#tpl-wine-list-item').html()),
+    template:_.template($('#tpl-juice-list-item').html()),
 
     render:function (eventName) {
         $(this.el).html(this.template(this.model.toJSON()));
@@ -38,9 +38,9 @@ window.WineListItemView = Backbone.View.extend({
 
 });
 
-window.WineView = Backbone.View.extend({
+window.JuiceView = Backbone.View.extend({
 
-    template:_.template($('#tpl-wine-details').html()),
+    template:_.template($('#tpl-juice-details').html()),
 
     render:function (eventName) {
         $(this.el).html(this.template(this.model.toJSON()));
@@ -55,20 +55,20 @@ var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"list",
-        "wines/:id":"wineDetails"
+        "juices/:id":"juiceDetails"
     },
 
     list:function () {
-        this.wineList = new WineCollection();
-        this.wineListView = new WineListView({model:this.wineList});
-        this.wineList.fetch();
-        $('#sidebar').html(this.wineListView.render().el);
+        this.juiceList = new JuiceCollection();
+        this.juiceListView = new JuiceListView({model:this.juiceList});
+        this.juiceList.fetch();
+        $('#sidebar').html(this.juiceListView.render().el);
     },
 
-    wineDetails:function (id) {
-        this.wine = this.wineList.get(id);
-        this.wineView = new WineView({model:this.wine});
-        $('#content').html(this.wineView.render().el);
+    juiceDetails:function (id) {
+        this.juice = this.juiceList.get(id);
+        this.juiceView = new JuiceView({model:this.juice});
+        $('#content').html(this.juiceView.render().el);
     }
 });
 

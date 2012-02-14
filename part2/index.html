@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Backbone Cellar</title>
+<title>Backbone Juice Shop</title>
 <link rel="stylesheet" href="../css/styles.css" />
 </head>
 
 <body>
 
-<div id="header"><h1>Backbone Cellar</h1></div>
+<div id="header"><h1>Backbone Juice Shop</h1></div>
 
 <div id="sidebar"></div>
 
 <div id="content">
-<h2>Welcome to Backbone Cellar</h2>
+<h2>Welcome to Backbone Juice Shop</h2>
 <p>
 This is a sample application part of of three-part tutorial showing how to build a CRUD application with Backbone.js.
 </p>
@@ -20,29 +20,25 @@ This is a sample application part of of three-part tutorial showing how to build
 
 <!-- Templates -->
 <script type="text/template" id="tpl-header">
-    <span class="title">Backbone Cellar</span>
-	<button class="new">New Wine</button>
+    <span class="title">Backbone Juice Shop</span>
+	<button class="new">New Juice</button>
 </script>
 
-<script type="text/template" id="tpl-wine-list-item">
-	<a href='#wines/<%= id %>'><%= name %></a>
+<script type="text/template" id="tpl-juice-list-item">
+	<a href='#juices/<%= id %>'><%= name %></a>
 </script>
 
-<script type="text/template" id="tpl-wine-details">
+<script type="text/template" id="tpl-juice-details">
 
     <div class="form-left-col">
         <label>Id:</label>
-        <input type="text" id="wineId" name="id" value="<%= id %>" disabled />
+        <input type="text" id="juiceId" name="id" value="<%= id %>" disabled />
         <label>Name:</label>
         <input type="text" id="name" name="name" value="<%= name %>" required/>
-        <label>Grapes:</label>
-        <input type="text" id="grapes" name="grapes" value="<%= grapes %>"/>
-        <label>Country:</label>
-        <input type="text" id="country" name="country" value="<%= country %>"/>
-        <label>Region:</label>
-        <input type="text" id="region" name="region"  value="<%= region %>"/>
-        <label>Year:</label>
-        <input type="text" id="year" name="year"  value="<%= year %>"/>
+        <label>Price:</label>
+        <input type="text" id="price" name="price" value="<%= price %>"/>
+        <label>Ingredients:</label>
+        <input type="text" id="ingredients" name="ingredients" value="<%= ingredients %>"/>
         <button class="save">Save</button>
         <button class="delete">Delete</button>
     </div>
@@ -59,7 +55,8 @@ This is a sample application part of of three-part tutorial showing how to build
 <script src="../lib/jquery-1.7.1.min.js"></script>
 <script src="../lib/underscore-min.js"></script>
 <script src="../lib/backbone-min.js"></script>
-<script src="js/main.js"></script>   
+<script src="js/main.js"></script>
 
 </body>
 </html>
+

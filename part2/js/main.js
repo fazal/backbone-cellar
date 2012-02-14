@@ -1,50 +1,48 @@
 // Models
-window.Wine = Backbone.Model.extend({
-    urlRoot:"../api/wines",
+window.Juice = Backbone.Model.extend({
+    urlRoot:"../api/juices",
     defaults:{
         "id":null,
         "name":"",
-        "grapes":"",
-        "country":"USA",
-        "region":"California",
-        "year":"",
+        "price":"",
+        "ingredients":"USA",
         "description":"",
         "picture":""
     }
 });
 
-window.WineCollection = Backbone.Collection.extend({
-    model:Wine,
-    url:"../api/wines"
+window.JuiceCollection = Backbone.Collection.extend({
+    model:Juice,
+    url:"../api/juices"
 });
 
 
 // Views
-window.WineListView = Backbone.View.extend({
+window.JuiceListView = Backbone.View.extend({
 
     tagName:'ul',
 
     initialize:function () {
         this.model.bind("reset", this.render, this);
         var self = this;
-        this.model.bind("add", function (wine) {
-            $(self.el).append(new WineListItemView({model:wine}).render().el);
+        this.model.bind("add", function (juice) {
+            $(self.el).append(new JuiceListItemView({model:juice}).render().el);
         });
     },
 
     render:function (eventName) {
-        _.each(this.model.models, function (wine) {
-            $(this.el).append(new WineListItemView({model:wine}).render().el);
+        _.each(this.model.models, function (juice) {
+            $(this.el).append(new JuiceListItemView({model:juice}).render().el);
         }, this);
         return this;
     }
 });
 
-window.WineListItemView = Backbone.View.extend({
+window.JuiceListItemView = Backbone.View.extend({
 
     tagName:"li",
 
-    template:_.template($('#tpl-wine-list-item').html()),
+    template:_.template($('#tpl-juice-list-item').html()),
 
     initialize:function () {
         this.model.bind("change", this.render, this);
@@ -62,9 +60,9 @@ window.WineListItemView = Backbone.View.extend({
     }
 });
 
-window.WineView = Backbone.View.extend({
+window.JuiceView = Backbone.View.extend({
 
-    template:_.template($('#tpl-wine-details').html()),
+    template:_.template($('#tpl-juice-details').html()),
 
     initialize:function () {
         this.model.bind("change", this.render, this);
@@ -77,8 +75,8 @@ window.WineView = Backbone.View.extend({
 
     events:{
         "change input":"change",
-        "click .save":"saveWine",
-        "click .delete":"deleteWine"
+        "click .save":"saveJuice",
+        "click .delete":"deleteJuice"
     },
 
     change:function (event) {
@@ -90,27 +88,25 @@ window.WineView = Backbone.View.extend({
         // this.model.set(change);
     },
 
-    saveWine:function () {
+    saveJuice:function () {
         this.model.set({
             name:$('#name').val(),
-            grapes:$('#grapes').val(),
-            country:$('#country').val(),
-            region:$('#region').val(),
-            year:$('#year').val(),
+            price:$('#price').val(),
+            ingredients:$('#ingredients').val(),
             description:$('#description').val()
         });
         if (this.model.isNew()) {
-            app.wineList.create(this.model);
+            app.juiceList.create(this.model);
         } else {
             this.model.save();
         }
         return false;
     },
 
-    deleteWine:function () {
+    deleteJuice:function () {
         this.model.destroy({
             success:function () {
-                alert('Wine deleted successfully');
+                alert('Juice deleted successfully');
                 window.history.back();
             }
         });
@@ -137,13 +133,13 @@ window.HeaderView = Backbone.View.extend({
     },
 
     events:{
-        "click .new":"newWine"
+        "click .new":"newJuice"
     },
 
-    newWine:function (event) {
-        if (app.wineView) app.wineView.close();
-        app.wineView = new WineView({model:new Wine()});
-        $('#content').html(app.wineView.render().el);
+    newJuice:function (event) {
+        if (app.juiceView) app.juiceView.close();
+        app.juiceView = new JuiceView({model:new Juice()});
+        $('#content').html(app.juiceView.render().el);
         return false;
     }
 });
@@ -154,7 +150,7 @@ var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"list",
-        "wines/:id":"wineDetails"
+        "juices/:id":"juiceDetails"
     },
 
     initialize:function () {
@@ -162,17 +158,17 @@ var AppRouter = Backbone.Router.extend({
     },
 
     list:function () {
-        this.wineList = new WineCollection();
-        this.wineListView = new WineListView({model:this.wineList});
-        this.wineList.fetch();
-        $('#sidebar').html(this.wineListView.render().el);
+        this.juiceList = new JuiceCollection();
+        this.juiceListView = new JuiceListView({model:this.juiceList});
+        this.juiceList.fetch();
+        $('#sidebar').html(this.juiceListView.render().el);
     },
 
-    wineDetails:function (id) {
-        this.wine = this.wineList.get(id);
-        if (app.wineView) app.wineView.close();
-        this.wineView = new WineView({model:this.wine});
-        $('#content').html(this.wineView.render().el);
+    juiceDetails:function (id) {
+        this.juice = this.juiceList.get(id);
+        if (app.juiceView) app.juiceView.close();
+        this.juiceView = new JuiceView({model:this.juice});
+        $('#content').html(this.juiceView.render().el);
     }
 
 });
